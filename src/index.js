@@ -38,9 +38,45 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    // console.log(expr)
+    let clean =[];
+    let splitted = splitToDozens(expr).forEach((str) => {
+        let arr = str.split('');
+        while (arr[0] === '0') {
+            arr = arr.slice(1);  
+        }
+        clean.push(arr.join(''))
+    })
+    console.log (clean)
+    splitToPairs(clean)
+    console.log(MORSE_TABLE['-...'])
 }
 
 module.exports = {
     decode
+}
+
+function splitToDozens (str) {
+    let result = [];
+    for (let i = 0; i < str.length / 10; i++) {
+        result[i] = str.slice( 10 * i, 10 * (i + 1));
+    }
+    return result;
+}
+
+function splitToPairs (str) {
+    let result = [];
+    for (let i = 0; i < str.length / 2; i++) {
+        result[i] = str.slice( 2 * i, 2 * (i + 1));
+    }
+    return result;
+}
+
+function removeZeroes (str) {
+    let arr = str.split('');
+    console.log(arr[0])
+    while (arr[0] === '0') {
+        arr = arr.slice(1);  
+    }
+    console.log(arr)
 }
