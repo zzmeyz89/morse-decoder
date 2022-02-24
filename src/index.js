@@ -35,10 +35,10 @@ const MORSE_TABLE = {
     '---..':  '8',
     '----.':  '9',
     '-----':  '0',
+    '**********': ' ',
 };
 
 function decode(expr) {
-    // console.log(expr)
     let clean =[];
     let splitted = splitToDozens(expr).forEach((str) => {
         let arr = str.split('');
@@ -47,9 +47,9 @@ function decode(expr) {
         }
         clean.push(arr.join(''))
     })
-    console.log (clean)
-    splitToPairs(clean)
-    console.log(MORSE_TABLE['-...'])
+    var pairs = clean.map( splitToPairs )
+    var result = pairs.map(code => code = MORSE_TABLE[code])
+    return result.join('')
 }
 
 module.exports = {
@@ -67,16 +67,17 @@ function splitToDozens (str) {
 function splitToPairs (str) {
     let result = [];
     for (let i = 0; i < str.length / 2; i++) {
+        
         result[i] = str.slice( 2 * i, 2 * (i + 1));
+        switch (result[i]) {
+            case '10':
+                result[i] = '.';
+                break;
+            case '11':
+                result[i] = '-';
+                break;
+        }
     }
-    return result;
-}
-
-function removeZeroes (str) {
-    let arr = str.split('');
-    console.log(arr[0])
-    while (arr[0] === '0') {
-        arr = arr.slice(1);  
-    }
-    console.log(arr)
+    return result.join('');
+    
 }
